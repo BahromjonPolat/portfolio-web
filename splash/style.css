@@ -2,16 +2,20 @@ body {
   margin: 0;
   padding: 0;
   font-family: montserrat;
-  background-color: black;
+  background-color: #212428;
 
-}.center {
+}
+
+.center {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 
-}.ring{
+}
+
+.ring {
   position: absolute;
   width: 200px;
   height: 200px;
@@ -22,18 +26,21 @@ body {
 
 @keyframes ring {
   50% {
-      transform: rotate(180deg);
-      box-shadow: 1px 5px 2px #18b201;
+    transform: rotate(180deg);
+    box-shadow: 1px 5px 2px #18b201;
   }
+
   0% {
-      transform: rotate(0deg);
-      box-shadow: 1px 5px 2px #e65c00;
+    transform: rotate(0deg);
+    box-shadow: 1px 5px 2px #e65c00;
   }
+
   100% {
-      transform: rotate(380deg);
-      box-shadow: 1px 5px 2px #0456c8;
+    transform: rotate(380deg);
+    box-shadow: 1px 5px 2px #0456c8;
   }
 }
+
 .ring::before {
   position: absolute;
   content: "";
@@ -43,7 +50,9 @@ body {
   width: 100%;
   border-radius: 50%;
   box-shadow: 0 0 5px rgba(255, 255, 255, .3);
-}.span {
+}
+
+.span {
   color: #737373;
   font-size: 20px;
   text-transform: uppercase;
@@ -51,12 +60,14 @@ body {
   line-height: 200px;
   animation: text 3s ease-in-out infinite;
 }
+
 @keyframes text {
   50% {
-      color: black;
-
+    color: white;
   }
-}.bottom {
+}
+
+.bottom {
   bottom: 0%;
   color: white;
   text-align: end;
