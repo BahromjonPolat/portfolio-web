@@ -84,6 +84,17 @@ function renderEducation() {
     });
 }
 
+// Handle image loading errors
+function handleImageError(img) {
+    // Hide the image
+    img.classList.add('hidden');
+    // Add no-image class to parent to show placeholder
+    const deviceScreen = img.closest('.device-screen');
+    if (deviceScreen) {
+        deviceScreen.classList.add('no-image');
+    }
+}
+
 // Render Projects
 function renderProjects() {
     const projectsContainer = document.getElementById('projects-container');
@@ -92,9 +103,85 @@ function renderProjects() {
         const projectCard = document.createElement('div');
         projectCard.className = 'project-card';
 
-        const platformBadges = project.platforms.map(platform =>
-            `<span class="platform-badge">${platform.platform}</span>`
-        ).join('');
+        const platformBadges = project.platforms.map(platform => {
+            // Get icon based on platform
+            let iconPath = '';
+            switch (platform.platform.toLowerCase()) {
+                case 'android':
+                    iconPath = 'icons/play_store.svg';
+                    break;
+                case 'ios':
+                    iconPath = 'icons/app_store.svg';
+                    break;
+                case 'windows':
+                    iconPath = 'icons/windows.svg';
+                    break;
+                case 'macos':
+                    iconPath = 'icons/apple.svg';
+                    break;
+                case 'web':
+                case 'linux':
+                default:
+                    iconPath = '';
+            }
+
+            let platformName = platform.platform;
+            switch (platformName.toLowerCase()) {
+                case 'windows':
+                    platformName = 'Windows';
+                    break;
+                case 'android':
+                    platformName = 'Play Store';
+                    break;
+                case 'web':
+                    platformName = 'Web';
+                    break;
+                case 'linux':
+                    platformName = 'Linux';
+                    break;
+                case 'ios':
+                    platformName = 'App Store';
+                    break;
+                case 'macos':
+                    platformName = 'MacOS';
+                    break;
+            }
+
+
+            // Generate rating stars
+            const rating = platform.rating || 0;
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+
+            let starsHTML = '';
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<span class="star full">★</span>';
+            }
+            if (hasHalfStar) {
+                starsHTML += '<span class="star half">★</span>';
+            }
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<span class="star empty">★</span>';
+            }
+
+            const badgeContent = `
+                <div class="platform-info">
+                    ${iconPath ? `<img src="${iconPath}" alt="${platform.platform}" class="platform-icon">` : ''}
+                    <span class="platform-name">${platformName}</span>
+                </div>
+                <div class="platform-rating">
+                    <div class="stars">${starsHTML}</div>
+                    <span class="rating-value">${rating.toFixed(1)}</span>
+                </div>
+            `;
+
+            if (platform.link) {
+                return `<a href="${platform.link}" target="_blank" rel="noopener noreferrer" class="platform-badge">${badgeContent}</a>`;
+            } else {
+                return `<div class="platform-badge">${badgeContent}</div>`;
+            }
+        }).join('');
 
         // Determine if mobile or desktop platform
         const isMobile = project.platforms.some(p =>
@@ -109,28 +196,23 @@ function renderProjects() {
                 <div class="project-devices">
                     <div class="device-frame iphone-secondary">
                         <div class="device-screen">
-                            <img src="${project.secondaryScreenshot}" alt="${project.title} secondary" loading="lazy">
+                            <img src="${project.secondaryScreenshot}" alt="${project.title} secondary" loading="lazy" onerror="handleImageError(this)">
                         </div>
                     </div>
                     <div class="device-frame iphone">
                         <div class="device-screen">
-                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy">
+                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy" onerror="handleImageError(this)">
                         </div>
                     </div>
                 </div>
             `;
         } else {
-            // Desktop devices - monitor and laptop frames
+            // Desktop devices - single laptop frame
             devicesHTML = `
                 <div class="project-devices desktop">
-                    <div class="device-frame monitor">
-                        <div class="device-screen">
-                            <img src="${project.secondaryScreenshot}" alt="${project.title} secondary" loading="lazy">
-                        </div>
-                    </div>
                     <div class="device-frame laptop">
                         <div class="device-screen">
-                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy">
+                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy" onerror="handleImageError(this)">
                         </div>
                     </div>
                 </div>
@@ -140,7 +222,10 @@ function renderProjects() {
         projectCard.innerHTML = `
             ${devicesHTML}
             <div class="project-content">
-                <h3>${project.title}</h3>
+                <div class="project-header">
+                    <img src="${project.logo}" alt="${project.title} logo" class="project-logo" onerror="this.style.display='none'">
+                    <h3>${project.title}</h3>
+                </div>
                 <p>${project.description}</p>
                 <div class="project-platforms">${platformBadges}</div>
             </div>

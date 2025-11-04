@@ -197,8 +197,8 @@ const projects = [
                 link: "https://play.google.com/store/apps/details?id=uz.hilal.tafsir"
             }
         ],
-        primaryScreenshot: "https://play-lh.googleusercontent.com/10ouX6UI24PgCIFAstC0w_qwPg8OU1jHk79RTJPfe2dq-sCagYCZxX7Z7YzC6NHWvVk=w526-h296-rw",
-        secondaryScreenshot: "https://play-lh.googleusercontent.com/SoLxcxfqVA5HPuNKztPNVgCfkazc-sAugZ2uriEdDwVezkgxa0FgSU6wj1jg8n9seNNN=w526-h296-rw"
+        primaryScreenshot: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/4f/8a/6e/4f8a6e50-1f1c-fe31-f7ba-92172656d631/IMG_5787_1.png/460x996bb.webp",
+        secondaryScreenshot: "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/f4/a5/ca/f4a5ca4c-082e-688d-f87b-4cc114c786ea/IMG_5779_1.png/460x996bb.webp"
     },
     {
         id: "9",

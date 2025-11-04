@@ -492,11 +492,14 @@ body {
 .device-screen {
     width: 100%;
     height: 100%;
-    background: #000;
+    background: linear-gradient(135deg, #1a1d21 0%, #2d3139 100%);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
     box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .device-screen img {
@@ -505,12 +508,38 @@ body {
     object-fit: cover;
 }
 
+/* Image placeholder when image fails to load */
+.device-screen::before {
+    content: '';
+    position: absolute;
+    width: 40%;
+    height: 40%;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233053D1' stroke-width='1.5'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E") no-repeat center;
+    background-size: contain;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.device-screen.no-image::before {
+    opacity: 0.3;
+}
+
+.device-screen.no-image {
+    background: linear-gradient(135deg, rgba(48, 83, 209, 0.1) 0%, rgba(48, 83, 209, 0.05) 100%);
+}
+
+.device-screen img.hidden {
+    display: none;
+}
+
 /* Laptop/Desktop Frame */
 .device-frame.laptop {
-    width: 165px;
-    height: 105px;
-    border-radius: 10px;
-    padding: 5px;
+    width: 280px;
+    height: 176px;
+    border-radius: 12px;
+    padding: 6px;
     background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     box-shadow:
         0 0 0 1px rgba(255, 255, 255, 0.08),
@@ -519,20 +548,20 @@ body {
 }
 
 .device-frame.laptop .device-screen {
-    border-radius: 6px;
+    border-radius: 8px;
 }
 
 /* Laptop base */
 .device-frame.laptop::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 185px;
-    height: 5px;
+    width: 310px;
+    height: 6px;
     background: linear-gradient(to bottom, #2d2d2d 0%, #1a1a1a 50%, #0d0d0d 100%);
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 10px 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
@@ -540,49 +569,25 @@ body {
 .device-frame.laptop::before {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
-    height: 5px;
+    width: 60px;
+    height: 6px;
     background: #1a1a1a;
     border-radius: 4px 4px 0 0;
     z-index: 1;
 }
 
-.device-frame.monitor {
-    width: 165px;
-    height: 105px;
-    border-radius: 10px;
-    padding: 5px;
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.4),
-        inset 0 1px 1px rgba(255, 255, 255, 0.05);
-}
-
-.device-frame.monitor .device-screen {
-    border-radius: 6px;
-}
 
 /* Desktop devices layout */
 .project-devices.desktop {
-    align-items: flex-end;
+    align-items: center;
+    justify-content: center;
 }
 
-.device-frame.monitor {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.device-frame.laptop {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: 2;
+.project-devices.desktop .device-frame.laptop {
+    position: relative;
 }
 
 /* Project Content */
@@ -592,10 +597,27 @@ body {
     flex-direction: column;
 }
 
+.project-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+}
+
+.project-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
 .project-content h3 {
     color: var(--color-white);
     font-size: 1.125rem;
-    margin-bottom: var(--spacing-sm);
+    margin: 0;
 }
 
 .project-content p {
@@ -616,11 +638,81 @@ body {
 }
 
 .platform-badge {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a.platform-badge {
+    color: inherit;
+}
+
+.platform-badge:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.platform-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+}
+
+
+.platform-icon {
+    width: 16px;
+    height: 16px;
+    filter: brightness(0) invert(1);
+}
+
+.platform-name {
     font-size: 0.75rem;
-    padding: 4px 8px;
-    background: var(--color-primary);
+    font-weight: 600;
     color: var(--color-white);
-    border-radius: 5px;
+}
+
+.platform-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
+.star {
+    font-size: 12px;
+    line-height: 1;
+}
+
+.star.full {
+    color: #FFA500;
+}
+
+.star.half {
+    color: #FFA500;
+    opacity: 0.6;
+}
+
+.star.empty {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.rating-value {
+    font-size: 0.7rem;
+    color: var(--color-text);
+    font-weight: 500;
 }
 
 /* ==================== CONTACT SECTION ==================== */
@@ -755,10 +847,19 @@ body {
         transform: translateX(22px);
     }
 
-    .device-frame.laptop,
-    .device-frame.monitor {
-        width: 150px;
-        height: 95px;
+    .device-frame.laptop {
+        width: 240px;
+        height: 150px;
+    }
+
+    .device-frame.laptop::after {
+        width: 265px;
+        height: 5px;
+    }
+
+    .device-frame.laptop::before {
+        width: 50px;
+        height: 5px;
     }
 
     .project-devices {
@@ -813,20 +914,19 @@ body {
         transform: translateX(10px);
     }
 
-    .device-frame.laptop,
-    .device-frame.monitor {
-        width: 135px;
-        height: 85px;
+    .device-frame.laptop {
+        width: 200px;
+        height: 125px;
     }
 
     .device-frame.laptop::after {
-        width: 155px;
-        height: 4px;
+        width: 220px;
+        height: 5px;
     }
 
     .device-frame.laptop::before {
-        width: 35px;
-        height: 4px;
+        width: 45px;
+        height: 5px;
     }
 
     .project-devices {
