@@ -93,12 +93,12 @@ function renderProjects() {
         projectCard.className = 'project-card';
 
         const platformBadges = project.platforms.map(platform =>
-            `<span class="platform-badge">${platform}</span>`
+            `<span class="platform-badge">${platform.platform}</span>`
         ).join('');
 
         // Determine if mobile or desktop platform
         const isMobile = project.platforms.some(p =>
-            ['iOS', 'Android'].includes(p)
+            ['ios', 'android'].includes(p.platform)
         );
 
         // Create device frames based on platform
