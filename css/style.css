@@ -367,16 +367,18 @@ body {
 /* ==================== PROJECTS SECTION ==================== */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: var(--spacing-lg);
 }
 
 .project-card {
-    background: var(--bg-secondary);
-    border-radius: 10px;
-    overflow: hidden;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: var(--spacing-lg);
     transition: all 0.3s;
     border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
@@ -385,14 +387,178 @@ body {
     box-shadow: 0 15px 40px rgba(48, 83, 209, 0.3);
 }
 
-.project-image {
+/* Device Frames Container */
+.project-devices {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 280px;
+    margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+/* iPhone Frame - Based on iPhone 16 Pro Max */
+.device-frame {
+    position: relative;
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    border-radius: 26px;
+    padding: 8px;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.device-frame.iphone {
+    width: 145px;
+    height: 300px;
+    border-radius: 26px;
+}
+
+.device-frame.iphone-secondary {
+    width: 125px;
+    height: 260px;
+    transform: translateX(26px);
+    z-index: 1;
+    opacity: 0.92;
+    border-radius: 24px;
+}
+
+/* Dynamic Island */
+.device-frame.iphone::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65px;
+    height: 20px;
+    background: #000;
+    border-radius: 30px;
+    z-index: 10;
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.8),
+        inset 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+/* Camera dot in Dynamic Island */
+.device-frame.iphone::after {
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 50%;
+    transform: translateX(14px);
+    width: 5px;
+    height: 5px;
+    background: radial-gradient(circle, #0a1b3d, #000);
+    border-radius: 50%;
+    z-index: 11;
+    box-shadow: 0 0 2px rgba(0, 100, 200, 0.3);
+}
+
+/* Screen */
+.device-screen {
     width: 100%;
-    height: 200px;
+    height: 100%;
+    background: #000;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.device-screen img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
+/* Laptop/Desktop Frame */
+.device-frame.laptop {
+    width: 165px;
+    height: 105px;
+    border-radius: 10px;
+    padding: 5px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.device-frame.laptop .device-screen {
+    border-radius: 6px;
+}
+
+/* Laptop base */
+.device-frame.laptop::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 185px;
+    height: 5px;
+    background: linear-gradient(to bottom, #2d2d2d 0%, #1a1a1a 50%, #0d0d0d 100%);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Laptop notch */
+.device-frame.laptop::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 5px;
+    background: #1a1a1a;
+    border-radius: 4px 4px 0 0;
+    z-index: 1;
+}
+
+.device-frame.monitor {
+    width: 165px;
+    height: 105px;
+    border-radius: 10px;
+    padding: 5px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+.device-frame.monitor .device-screen {
+    border-radius: 6px;
+}
+
+/* Desktop devices layout */
+.project-devices.desktop {
+    align-items: flex-end;
+}
+
+.device-frame.monitor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.device-frame.laptop {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+}
+
+/* Project Content */
 .project-content {
-    padding: var(--spacing-md);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-content h3 {
@@ -408,12 +574,14 @@ body {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin-bottom: var(--spacing-sm);
 }
 
 .project-platforms {
     display: flex;
     gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
+    margin-top: auto;
+    flex-wrap: wrap;
 }
 
 .platform-badge {
@@ -539,6 +707,31 @@ body {
     .experience-item::before {
         left: 0;
     }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .device-frame.iphone {
+        width: 130px;
+        height: 270px;
+    }
+
+    .device-frame.iphone-secondary {
+        width: 110px;
+        height: 230px;
+        transform: translateX(22px);
+    }
+
+    .device-frame.laptop,
+    .device-frame.monitor {
+        width: 150px;
+        height: 95px;
+    }
+
+    .project-devices {
+        min-height: 270px;
+    }
 }
 
 @media (max-width: 500px) {
@@ -561,6 +754,51 @@ body {
 
     .projects-grid {
         grid-template-columns: 1fr;
+    }
+
+    .device-frame.iphone {
+        width: 115px;
+        height: 240px;
+    }
+
+    .device-frame.iphone-secondary {
+        width: 95px;
+        height: 200px;
+        transform: translateX(18px);
+    }
+
+    /* Adjust Dynamic Island for mobile */
+    .device-frame.iphone::before {
+        width: 55px;
+        height: 18px;
+        top: 8px;
+    }
+
+    .device-frame.iphone::after {
+        width: 4px;
+        height: 4px;
+        top: 14px;
+        transform: translateX(12px);
+    }
+
+    .device-frame.laptop,
+    .device-frame.monitor {
+        width: 135px;
+        height: 85px;
+    }
+
+    .device-frame.laptop::after {
+        width: 155px;
+        height: 4px;
+    }
+
+    .device-frame.laptop::before {
+        width: 35px;
+        height: 4px;
+    }
+
+    .project-devices {
+        min-height: 240px;
     }
 
     .contact-info {

@@ -96,8 +96,49 @@ function renderProjects() {
             `<span class="platform-badge">${platform}</span>`
         ).join('');
 
+        // Determine if mobile or desktop platform
+        const isMobile = project.platforms.some(p =>
+            ['iOS', 'Android'].includes(p)
+        );
+
+        // Create device frames based on platform
+        let devicesHTML = '';
+        if (isMobile) {
+            // Mobile devices - two iPhone frames
+            devicesHTML = `
+                <div class="project-devices">
+                    <div class="device-frame iphone-secondary">
+                        <div class="device-screen">
+                            <img src="${project.secondaryScreenshot}" alt="${project.title} secondary" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="device-frame iphone">
+                        <div class="device-screen">
+                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Desktop devices - monitor and laptop frames
+            devicesHTML = `
+                <div class="project-devices desktop">
+                    <div class="device-frame monitor">
+                        <div class="device-screen">
+                            <img src="${project.secondaryScreenshot}" alt="${project.title} secondary" loading="lazy">
+                        </div>
+                    </div>
+                    <div class="device-frame laptop">
+                        <div class="device-screen">
+                            <img src="${project.primaryScreenshot}" alt="${project.title}" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         projectCard.innerHTML = `
-            <img src="${project.logo}" alt="${project.title}" class="project-image" loading="lazy">
+            ${devicesHTML}
             <div class="project-content">
                 <h3>${project.title}</h3>
                 <p>${project.description}</p>
