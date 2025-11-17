@@ -11,9 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/png" href="images/favicon.png">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         .error-section {
@@ -23,37 +21,55 @@
             justify-content: center;
             text-align: center;
             padding: var(--spacing-xl);
-            background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1d21 100%);
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .error-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.05), transparent 70%);
+            pointer-events: none;
         }
 
         .error-content {
             animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 1;
         }
 
         .error-code {
             font-family: var(--font-heading);
             font-size: clamp(6rem, 15vw, 12rem);
-            font-weight: 800;
-            color: var(--color-primary);
+            font-weight: 700;
+            color: var(--color-accent);
             line-height: 1;
             margin-bottom: var(--spacing-md);
-            text-shadow: 0 0 30px rgba(48, 83, 209, 0.3);
+            text-shadow: 0 0 60px rgba(191, 255, 10, 0.3);
+            letter-spacing: -0.05em;
         }
 
         .error-title {
             font-family: var(--font-heading);
             font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 700;
+            font-weight: 600;
             color: var(--color-white);
             margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
         }
 
         .error-description {
-            font-size: 1.125rem;
+            font-size: 1rem;
             color: var(--color-text);
-            margin-bottom: var(--spacing-xl);
-            max-width: 600px;
-            line-height: 1.6;
+            margin-bottom: var(--spacing-2xl);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .error-actions {
@@ -67,54 +83,51 @@
             display: inline-flex;
             align-items: center;
             gap: var(--spacing-xs);
-            padding: var(--spacing-md) var(--spacing-xl);
-            border-radius: 10px;
-            font-weight: 600;
+            padding: 16px 28px;
+            border-radius: 12px;
+            font-weight: 500;
             text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1rem;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
         }
 
         .btn-primary {
-            background: var(--color-primary);
-            color: var(--color-white);
-            border: 2px solid var(--color-primary);
+            background: var(--color-white);
+            color: var(--color-black);
+            border: 1px solid var(--color-white);
         }
 
         .btn-primary:hover {
             background: transparent;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(48, 83, 209, 0.3);
+            color: var(--color-white);
+            transform: translateY(-2px);
         }
 
         .btn-secondary {
             background: transparent;
             color: var(--color-white);
-            border: 2px solid var(--color-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .btn-secondary:hover {
             border-color: var(--color-white);
-            transform: translateY(-5px);
+            transform: translateY(-2px);
         }
 
         .error-illustration {
-            margin-bottom: var(--spacing-xl);
-            opacity: 0.8;
+            margin-bottom: var(--spacing-2xl);
+            opacity: 0.6;
         }
 
         .error-illustration svg {
-            width: clamp(200px, 30vw, 300px);
+            width: clamp(150px, 25vw, 250px);
             height: auto;
         }
 
         @keyframes float {
-
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px);
             }
-
             50% {
                 transform: translateY(-20px);
             }
@@ -131,7 +144,7 @@
     <nav class="navbar">
         <div class="container">
             <a href="/" style="text-decoration: none;">
-                <div class="nav-brand">BAHOMRJON<span style="color: white;">.UZ</span></div>
+                <div class="nav-brand">BP</div>
             </a>
             <button class="nav-toggle" aria-label="Toggle navigation">
                 <span></span>
@@ -142,8 +155,8 @@
                 <li><a href="/#home" class="nav-link">Home</a></li>
                 <li><a href="/#about" class="nav-link">About</a></li>
                 <li><a href="/#skills" class="nav-link">Skills</a></li>
-                <li><a href="/#experience" class="nav-link">Experience</a></li>
                 <li><a href="/#projects" class="nav-link">Projects</a></li>
+                <li><a href="/#experience" class="nav-link">Experience</a></li>
                 <li><a href="/#contact" class="nav-link">Contact</a></li>
             </ul>
         </div>
@@ -154,14 +167,14 @@
         <div class="error-content">
             <div class="error-illustration">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="100" cy="100" r="80" fill="none" stroke="#3053D1" stroke-width="4" opacity="0.2" />
-                    <circle cx="100" cy="100" r="60" fill="none" stroke="#3053D1" stroke-width="3" opacity="0.3" />
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="#0066FF" stroke-width="3" opacity="0.15" />
+                    <circle cx="100" cy="100" r="60" fill="none" stroke="#0066FF" stroke-width="2" opacity="0.2" />
                     <path
                         d="M70 80 Q70 70 80 70 L120 70 Q130 70 130 80 L130 120 Q130 130 120 130 L80 130 Q70 130 70 120 Z"
-                        fill="#3053D1" opacity="0.1" stroke="#3053D1" stroke-width="2" />
-                    <circle cx="85" cy="95" r="5" fill="#3053D1" />
-                    <circle cx="115" cy="95" r="5" fill="#3053D1" />
-                    <path d="M80 115 Q100 105 120 115" fill="none" stroke="#3053D1" stroke-width="3"
+                        fill="#0066FF" opacity="0.08" stroke="#0066FF" stroke-width="2" />
+                    <circle cx="85" cy="95" r="5" fill="#BFFF0A" />
+                    <circle cx="115" cy="95" r="5" fill="#BFFF0A" />
+                    <path d="M80 115 Q100 125 120 115" fill="none" stroke="#0066FF" stroke-width="3"
                         stroke-linecap="round" />
                 </svg>
             </div>
